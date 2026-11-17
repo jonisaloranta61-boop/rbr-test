@@ -1,0 +1,13 @@
+name: build
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y g++-mingw-w64-i686
+      - run: i686-w64-mingw32-g++ -shared -static -o RBRTest.dll plugin.cpp
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RBRTest
+          path: RBRTest.dll
